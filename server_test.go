@@ -6,6 +6,24 @@ import (
 	"testing"
 )
 
+func TestRequest(t *testing.T) {
+	var handler http.HandlerFunc = func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, r.RequestURI)
+		fmt.Fprintln(w, r.Method)
+	}
+
+	server := http.Server{
+		Addr:    "localhost:8001",
+		Handler: handler,
+	}
+
+	err := server.ListenAndServe()
+
+	if err != nil {
+		panic(err)
+	}
+}
+
 func TestServeMux(t *testing.T) {
 	mux := http.NewServeMux()
 
