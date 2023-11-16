@@ -8,8 +8,23 @@ import (
 	"testing"
 )
 
-func HelloHandler(writer http.ResponseWriter, request *http.Request) {
-	fmt.Fprintf(writer, "Hello Go")
+func MultipleQueryParameter(writer http.ResponseWriter, request *http.Request) {
+	email := request.URL.Query().Get("email")
+	otp := request.URL.Query().Get("otp")
+
+	fmt.Fprintf(writer, "Hi, %s, this is your OTP code: %s", email, otp)
+}
+
+func TestMultipleQueryParameter(t *testing.T) {
+	request := httptest.NewRequest(http.MethodGet, "http://localhost:8000?email=asep@gmail.com&otp=290192", nil)
+	recorder := httptest.NewRecorder()
+
+	MultipleQueryParameter(recorder, request)
+
+	response := recorder.Result()
+	body, _ := io.ReadAll(response.Body)
+
+	fmt.Println(string(body))
 }
 
 func SaySalam(writer http.ResponseWriter, request *http.Request) {
@@ -33,6 +48,10 @@ func TestQueryParameter(t *testing.T) {
 	body, _ := io.ReadAll(response.Body)
 
 	fmt.Println(string(body))
+}
+
+func HelloHandler(writer http.ResponseWriter, request *http.Request) {
+	fmt.Fprintf(writer, "Hello Go")
 }
 
 func TestHttp(t *testing.T) {
