@@ -5,8 +5,31 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 )
+
+func MultipleQueryParameterValues(writer http.ResponseWriter, request *http.Request) {
+	query := request.URL.Query()
+
+	var hobbies []string = query["hobby"]
+
+	fmt.Fprintln(writer, strings.Join(hobbies, " | "))
+}
+
+func TestMultipleQueryParameterValues(t *testing.T) {
+	request := httptest.NewRequest(http.MethodGet, "http://localhost:8000?hobby=gaming&hobby=wota", nil)
+
+	recorder := httptest.NewRecorder()
+
+	MultipleQueryParameterValues(recorder, request)
+
+	response := recorder.Result()
+
+	body, _ := io.ReadAll(response.Body)
+
+	fmt.Println(string(body))
+}
 
 func MultipleQueryParameter(writer http.ResponseWriter, request *http.Request) {
 	email := request.URL.Query().Get("email")
