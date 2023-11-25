@@ -9,6 +9,12 @@ import (
 	"text/template"
 )
 
+func TemplateDirectory(writer http.ResponseWriter, request *http.Request) {
+	t := template.Must(template.ParseGlob("./templates/*.gohtml"))
+
+	t.ExecuteTemplate(writer, "simple.gohtml", "Hello from `file` template")
+}
+
 func SimpleHTMLFile(writer http.ResponseWriter, request *http.Request) {
 	t := template.Must(template.ParseFiles("./templates/simple.gohtml"))
 
@@ -45,6 +51,23 @@ func TestSimpleHTMLFile(t *testing.T) {
 	recorder := httptest.NewRecorder()
 
 	SimpleHTMLFile(recorder, request)
+
+	response := recorder.Result()
+
+	body, err := io.ReadAll(response.Body)
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(string(body))
+}
+
+func TestTemplateDirectory(t *testing.T) {
+	request := httptest.NewRequest(http.MethodGet, "http://localhost/", nil)
+	recorder := httptest.NewRecorder()
+
+	TemplateDirectory(recorder, request)
 
 	response := recorder.Result()
 
