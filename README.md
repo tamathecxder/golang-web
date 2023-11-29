@@ -1,6 +1,6 @@
-# Golang Web w/ PZN
+# Golang Web w/ Programmer Zaman Now
 
-Welcome to the "Golang Web w/ PZN" repository! This repository is a hub for exploring Golang web development with a focus on PZN (Placeholder for your name). Here, you'll find a collection of resources, code examples, and insights to help you dive into web development using the Go programming language.
+Welcome to the "Golang Web w/ Programmer Zaman Now" repository! This repository is a hub for exploring Golang web development with a focus on PZN (Placeholder for your name). Here, you'll find a collection of resources, code examples, and insights to help you dive into web development using the Go programming language.
 
 ## Table of Contents
 
