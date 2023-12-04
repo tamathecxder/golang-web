@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+</head>
+<body>
+    {{if ge .Age 18}}
+        <h1>Adult</h1>
+    {{else if ge .Age 40}}
+        <h1>Oldman</h1>
+    {{else}}
+        <h1>I Dunno</h1>
+    {{end}}
+</body>
+</html>
