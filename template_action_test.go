@@ -51,3 +51,27 @@ func TestTemplateActionComparison(t *testing.T) {
 
 	fmt.Println(string(body))
 }
+
+func RangeTemplateAction(writer http.ResponseWriter, request *http.Request) {
+	t := template.Must(template.ParseFiles("./templates/range.gohtml"))
+
+	t.ExecuteTemplate(writer, "range.gohtml", map[string]interface{}{
+		"Title": "Range Operator",
+		"Bands": []string{
+			"I Prevail", "Alpha Wolf", "The Beatles",
+		},
+	})
+}
+
+func TestTemplateActionRange(t *testing.T) {
+	request := httptest.NewRequest(http.MethodGet, "http://localhost/", nil)
+	recorder := httptest.NewRecorder()
+
+	RangeTemplateAction(recorder, request)
+
+	response := recorder.Result()
+
+	body, _ := io.ReadAll(response.Body)
+
+	fmt.Println(string(body))
+}
