@@ -38,3 +38,25 @@ func TestTemplateFunction(t *testing.T) {
 
 	fmt.Print(string(body))
 }
+
+func TemplateGlobalFunction(writer http.ResponseWriter, request *http.Request) {
+	t := template.Must(template.New("FUNCTION").Parse(`{{ len .Name }}`))
+
+	t.ExecuteTemplate(writer, "FUNCTION", MyPage{
+		Name: "Asep",
+	})
+}
+
+func TestTemplateGlobalFunction(t *testing.T) {
+	request := httptest.NewRequest(http.MethodGet, "http://localhost:8000/", nil)
+
+	recorder := httptest.NewRecorder()
+
+	TemplateGlobalFunction(recorder, request)
+
+	result := recorder.Result()
+
+	body, _ := io.ReadAll(result.Body)
+
+	fmt.Print(string(body))
+}
